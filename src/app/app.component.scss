@@ -1,0 +1,17 @@
+.clear-button {
+  display: grid;
+  place-items: center;
+  padding: 10px;
+  border: none;
+  border-radius: 100px;
+  background-color: transparent;
+
+  &:hover {
+    cursor: pointer;
+    background-color: lightgray
+  }
+}
+
+.form-field {
+  width: 300px;
+}

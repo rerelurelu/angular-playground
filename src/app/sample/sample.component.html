@@ -1,8 +1,13 @@
 <mat-form-field>
-  <input type="text" placeholder="Enter text" aria-label="Number" matInput [formControl]="myControl">
-  <mat-autocomplete #auto="matAutocomplete">
-    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-      {{option}}
+  <input
+    type="text"
+    placeholder="Enter text"
+    matInput
+    [formControl]="myControl"
+  />
+  <mat-autocomplete (optionSelected)="onOptionSelected($event)">
+    <mat-option *ngFor="let option of options" [value]="option">
+      {{ option }}
     </mat-option>
   </mat-autocomplete>
 </mat-form-field>

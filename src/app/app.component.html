@@ -8,19 +8,12 @@
     [formControl]="myControl"
     [matAutocomplete]="auto"
   />
-  <button
-    *ngIf="myControl.value"
-    class="clear-button"
-    matSuffix
-    mat-icon-button
-    aria-label="Clear"
-    (click)="myControl.setValue('')"
+  <mat-autocomplete
+    autoActiveFirstOption
+    #auto="matAutocomplete"
+    (optionSelected)="onSelected($event)"
   >
-    <!-- <mat-icon>close</mat-icon> -->
-    <i class="fa-solid fa-xmark"></i>
-  </button>
-  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+    <mat-option *ngFor="let option of options" [value]="option">
       {{ option }}
     </mat-option>
   </mat-autocomplete>

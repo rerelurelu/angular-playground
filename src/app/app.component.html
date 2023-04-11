@@ -1,20 +1,19 @@
-<h1>TEST</h1>
-
-<mat-form-field appearance="fill" class="form-field">
-  <mat-label>Input</mat-label>
-  <input
-    type="text"
-    matInput
-    [formControl]="myControl"
-    [matAutocomplete]="auto"
-  />
-  <mat-autocomplete
-    autoActiveFirstOption
-    #auto="matAutocomplete"
-    (optionSelected)="onSelected($event)"
-  >
-    <mat-option *ngFor="let option of options" [value]="option">
-      {{ option }}
-    </mat-option>
-  </mat-autocomplete>
-</mat-form-field>
+<form [formGroup]="form">
+  <ng-container *ngFor="let item of items; let i = index">
+    <mat-form-field appearance="fill">
+      <mat-label>商品名{{ i + 1 }}</mat-label>
+      <input matInput formControlName="{{ item.name }}" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>値段{{ i + 1 }}</mat-label>
+      <input matInput type="number" formControlName="{{ item.price }}" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>販売元{{ i + 1 }}</mat-label>
+      <input matInput formControlName="{{ item.seller }}" />
+    </mat-form-field>
+    <br />
+  </ng-container>
+  <button nbButton (click)="addFields()">追加</button>
+  <button nbButton (click)="displayFields()">表示</button>
+</form>

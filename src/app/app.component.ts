@@ -1,36 +1,46 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { debounceTime, distinctUntilChanged, filter, tap } from 'rxjs';
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+
+interface Item {
+  name: string;
+  price: string;
+  seller: string;
+}
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
-  myControl = new FormControl('');
-  options: string[] = ['One', 'Two', 'Three'];
-  selectedValue: string = '';
+export class AppComponent {
+  form: FormGroup;
+  items: Item[] = [];
 
-  ngOnInit() {
-    this.myControl.valueChanges
-      .pipe(
-        debounceTime(1000),
-        distinctUntilChanged(),
-        tap(() => (this.options = [])),
-        filter((value) => value !== this.selectedValue),
-        debounceTime(1000)
-      )
-      .subscribe((res) => {
-        console.log(res);
-        this.options = ['One', 'Two', 'Three'];
-        this.selectedValue = '';
-      });
+  constructor(private fb: FormBuilder) {
+    this.form = this.fb.group({});
+    this.addFields();
   }
 
-  onSelected(event: MatAutocompleteSelectedEvent) {
-    this.options = [];
-    this.selectedValue = event.option.value;
+  ngOnInit() {}
+
+  addFields() {
+    const newItem: Item = {
+      name: `name${this.items.length}`,
+      price: `price${this.items.length}`,
+      seller: `seller${this.items.length}`,
+    };
+    this.items.push(newItem);
+
+    const group: any = {};
+    group[newItem.name] = new FormControl('');
+    group[newItem.price] = new FormControl('');
+    group[newItem.seller] = new FormControl('');
+    this.form.addControl(newItem.name, group[newItem.name]);
+    this.form.addControl(newItem.price, group[newItem.price]);
+    this.form.addControl(newItem.seller, group[newItem.seller]);
+  }
+
+  displayFields() {
+    console.log(this.form.value);
   }
 }

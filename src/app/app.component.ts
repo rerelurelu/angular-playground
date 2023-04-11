@@ -41,6 +41,6 @@ export class AppComponent {
   }
 
   displayFields() {
-    console.log(this.form.value);
+    console.log(this.form.value.name0);
   }
 }
